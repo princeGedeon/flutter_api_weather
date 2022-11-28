@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:meteo_app/models/geoposition.dart';
 import 'package:meteo_app/services/LocationSevice.dart';
+import 'package:meteo_app/services/apiService.dart';
 
 class HomeView extends StatefulWidget {
   final String title;
@@ -54,6 +55,7 @@ class _HomeViewState extends State<HomeView> {
     if (loc!=null){
       setState(() {
         userPosition=loc;
+        ApiService().callApi(userPosition!);
       });
     }
   }
