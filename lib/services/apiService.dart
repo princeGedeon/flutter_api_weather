@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
+import 'package:meteo_app/models/Apiresponse.dart';
 import 'package:meteo_app/models/geoposition.dart';
 import 'package:meteo_app/services/apikeyservice.dart';
 
@@ -20,13 +21,13 @@ class ApiService{
 
 
 
-  Future<Null> callApi(GeoPosition position) async{
+  Future<APIResponse> callApi(GeoPosition position) async{
 
     final queryString=prepareQuery(position);
     print(queryString);
     final uri=Uri.parse(queryString);
     final call=await get(uri);
     Map<String,dynamic> map=json.decode(call.body);
-    print(map);
+    return APIResponse.fromJson(map);
   }
 }
