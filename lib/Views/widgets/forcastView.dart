@@ -18,11 +18,10 @@ class ForeCastView extends StatelessWidget {
       children: [
         CurrentWeather(forcast: response!.list.first),
         Expanded(child:
-         ListView.separated(itemBuilder: (context,index){
+         ListView.builder(itemBuilder: (context,index){
            return DailyTile(day:byDay[index]);
 
-         }, separatorBuilder: (context,index){
-           return const Divider();
+
          }, itemCount: byDay.length)
         ),
 

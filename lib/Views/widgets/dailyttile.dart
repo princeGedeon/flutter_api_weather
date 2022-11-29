@@ -8,11 +8,15 @@ class DailyTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      trailing: Image.network(DataConverter().fromIcon(day.icon)),
-      leading: Text(day.day),
-      title: Text(day.description),
-      subtitle: Text(day.minAndMax()),
+    return Card(
+      elevation: 7,
+      color: Theme.of(context).primaryColorLight,
+      child: ListTile(
+        trailing: Image.network(DataConverter().fromIcon(day.icon)),
+        leading: Text(day.day),
+        title: Text(day.description),
+        subtitle: Text(day.minAndMax()),
+      ),
     );
   }
 }
