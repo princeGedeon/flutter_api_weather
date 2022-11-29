@@ -25,8 +25,13 @@ class MyApp extends StatelessWidget {
 
 
         primarySwatch: Colors.blue,
+        textTheme: TextTheme(
+          headlineLarge: TextStyle(fontSize: 75,fontWeight: FontWeight.bold,color: Theme.of(context).primaryColor),
+          headlineMedium: TextStyle(fontSize: 30,color: Theme.of(context).primaryColorDark),
+          headlineSmall: const TextStyle(fontSize: 20,fontStyle: FontStyle.italic)
+        )
       ),
-      home:  HomeView(title: 'Flutter Demo Home Page'),
+      home:  HomeView(title: 'Weather App | By princeGedeon'),
     );
   }
 }

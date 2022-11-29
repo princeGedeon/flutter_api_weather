@@ -28,6 +28,7 @@ class ApiService{
     final uri=Uri.parse(queryString);
     final call=await get(uri);
     Map<String,dynamic> map=json.decode(call.body);
+
     return APIResponse.fromJson(map);
   }
 }

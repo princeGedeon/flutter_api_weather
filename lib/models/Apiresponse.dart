@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:meteo_app/services/data_converter.dart';
+
 class APIResponse{
   String cod;
   int message;
@@ -10,11 +14,21 @@ class APIResponse{
     return APIResponse(
       cod: json["cod"],
       message: json["message"],
-      cnt:json["cnt"], list: [],
+      cnt:json["cnt"],
+     list:DataConverter().listMappable(json["list"]).map((e) => Forecast.fromJson(e)).toList(),
      /* list: List.of(json["list"])
           .map((i) => i /* can't generate it properly yet */)
           .toList(),*/
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "cod": this.cod,
+      "message": this.message,
+      "cnt": this.cnt,
+      "list": this.list,
+    };
   }
 //
 
@@ -33,11 +47,11 @@ class Forecast{
 
   factory Forecast.fromJson(Map<String, dynamic> json) {
     return Forecast(
-      dt: int.parse(json["dt"]),
+      dt:json["dt"],
       main: Main.fromJson(json["main"]),
-      weather: json["weather"],
-      wind: json["wind"],
-      clouds: json["clouds"],
+      weather: DataConverter().listMappable(json["weather"]).map((e) => Weather.fromJson(e)).toList(),
+      wind: Wind.fromJson(json["wind"]),
+      clouds: Clouds.fromJson(json["clouds"]),
       visibility: json["visibility"],
       dt_txt: json["dt_txt"],
     );
@@ -51,10 +65,10 @@ class Main{
   double feels_like;
   double temp_min;
   double temp_max;
-  int pressure;
-  int sea_level;
-  int grnd_level;
-  int humidity;
+  double pressure;
+  double sea_level;
+  double grnd_level;
+  double humidity;
   double temp_kf;
 
   Main({required this.temp,required this.feels_like,required this.temp_min,required this.temp_max,required this.pressure,
@@ -62,15 +76,15 @@ class Main{
 
   factory Main.fromJson(Map<String, dynamic> json) {
     return Main(
-      temp: json["temp"],
-      feels_like:json["feels_like"],
-      temp_min: json["temp_min"],
-      temp_max: json["temp_max"],
-      pressure: json["pressure"],
-      sea_level: json["sea_level"],
-      grnd_level: json["grnd_level"],
-      humidity:json["humidity"],
-      temp_kf: json["temp_kf"],
+      temp: json["temp"].toDouble(),
+      feels_like:json["feels_like"].toDouble(),
+      temp_min: json["temp_min"].toDouble(),
+      temp_max: json["temp_max"].toDouble(),
+      pressure: json["pressure"].toDouble(),
+      sea_level: json["sea_level"].toDouble(),
+      grnd_level: json["grnd_level"].toDouble(),
+      humidity:json["humidity"].toDouble(),
+      temp_kf: json["temp_kf"].toDouble(),
     );
   }
 //
@@ -120,16 +134,16 @@ class Clouds{
 
 class Wind{
   double speed;
-  int def;
+  int? def;
   double gust;
 
   Wind({required this.speed,required this.def,required this.gust});
 
   factory Wind.fromJson(Map<String, dynamic> json) {
     return Wind(
-      speed:json["speed"],
+      speed:json["speed"].toDouble(),
       def: json["def"],
-      gust:json["gust"],
+      gust:json["gust"].toDouble(),
     );
   }
 //

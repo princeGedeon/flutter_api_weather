@@ -1,11 +1,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
+import 'package:meteo_app/Views/nosdataViews.dart';
 import 'package:meteo_app/models/geoposition.dart';
 import 'package:meteo_app/services/LocationSevice.dart';
 import 'package:meteo_app/services/apiService.dart';
 
 import '../../models/Apiresponse.dart';
+import '../widgets/forcastView.dart';
 
 class HomeView extends StatefulWidget {
   final String title;
@@ -40,9 +42,7 @@ class _HomeViewState extends State<HomeView> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Text("Notre position:\n ${userPosition?.lat} / ${userPosition?.lon} \nNotre reponse est:${apiResponse?.cnt??0}"),
-      ),
+      body: (apiResponse==null)?NoDataView():ForeCastView(response: apiResponse!,),
       floatingActionButton: FloatingActionButton(onPressed: () { getUserLocation();
         print("h");
         print(userPosition?.toMap());},
@@ -61,6 +61,7 @@ class _HomeViewState extends State<HomeView> {
 
       });
       apiResponse=await ApiService().callApi(userPosition!);
+      print(apiResponse!.toJson());
       setState(() {
 
       });
